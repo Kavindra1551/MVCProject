@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="UserdataModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="AdminRegister">
+    <Key>
+      <PropertyRef Name="AdminId" />
+    </Key>
+    <Property Name="AdminId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="AdminEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="AdminPassword" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="Grocery">
+    <Key>
+      <PropertyRef Name="GroceryId" />
+    </Key>
+    <Property Name="GroceryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Price" Type="Int32" />
+    <Property Name="Discount" Type="Int32" />
+    <Property Name="Category" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Quantity" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Add_Cart" Relationship="UserdataModel.FK__Add_Cart__Grocer__3C69FB99" FromRole="Grocery" ToRole="Add_Cart" />
+  </EntityType>
+  <EntityType Name="UserRegister">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityContainer Name="UserdataEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="AdminRegisters" EntityType="Self.AdminRegister" />
+    <EntitySet Name="Groceries" EntityType="Self.Grocery" />
+    <EntitySet Name="UserRegisters" EntityType="Self.UserRegister" />
+    <EntitySet Name="Add_Cart" EntityType="UserdataModel.Add_Cart" />
+    <AssociationSet Name="FK__Add_Cart__Grocer__3C69FB99" Association="UserdataModel.FK__Add_Cart__Grocer__3C69FB99">
+      <End Role="Grocery" EntitySet="Groceries" />
+      <End Role="Add_Cart" EntitySet="Add_Cart" />
+    </AssociationSet>
+    <EntitySet Name="Orders" EntityType="UserdataModel.Order" />
+  </EntityContainer>
+  <EntityType Name="Add_Cart">
+    <Key>
+      <PropertyRef Name="CartID" />
+    </Key>
+    <Property Name="CartID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Item_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="GroceryId" Type="Int32" />
+    <Property Name="Price" Type="Int32" />
+    <Property Name="Quantity" Type="Int32" />
+    <NavigationProperty Name="Grocery" Relationship="UserdataModel.FK__Add_Cart__Grocer__3C69FB99" FromRole="Add_Cart" ToRole="Grocery" />
+  </EntityType>
+  <Association Name="FK__Add_Cart__Grocer__3C69FB99">
+    <End Type="UserdataModel.Grocery" Role="Grocery" Multiplicity="0..1" />
+    <End Type="UserdataModel.Add_Cart" Role="Add_Cart" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Grocery">
+        <PropertyRef Name="GroceryId" />
+      </Principal>
+      <Dependent Role="Add_Cart">
+        <PropertyRef Name="GroceryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Order">
+    <Key>
+      <PropertyRef Name="OrderID" />
+    </Key>
+    <Property Name="OrderID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserId" Type="Int32" />
+    <Property Name="ProductID" Type="Int32" Nullable="false" />
+    <Property Name="Quantity" Type="Int32" Nullable="false" />
+    <Property Name="TotalAmount" Type="Int32" Nullable="false" />
+    <Property Name="OrderDate" Type="DateTime" Precision="3" />
+    <Property Name="OrderStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
+</Schema>

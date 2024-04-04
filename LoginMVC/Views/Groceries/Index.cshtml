@@ -1,0 +1,75 @@
+﻿@model IEnumerable<LoginMVC.Models.Grocery>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/AdminView.cshtml";
+
+}
+
+<h2 style=" color:white;">ITEMS</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table" style=" color:white;">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Price)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Discount)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Category)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Quantity)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Price)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Discount)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Category)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Quantity)
+        </td>
+        <td>
+            @*@Html.ActionLink("Edit", "Edit", new { id=item.GroceryId }) |
+        @Html.ActionLink("Details", "Details", new { id=item.GroceryId }) |
+        @Html.ActionLink("Delete", "Delete", new { id=item.GroceryId })*@
+            <a href="@Url.Action("Edit", new {id = item.GroceryId})" class="btn btn-primary"><i class="fa fa-edit"></i></a>
+            <a href="@Url.Action("Details", new {id = item.GroceryId})" class="btn btn-success"><i class="fa fa-info"></i></a>
+            <a href="@Url.Action("Delete", new {id = item.GroceryId})" class="btn btn-danger"><i class="fa fa-trash"></i></a>
+        </td>
+    </tr>
+}
+
+</table>
+<style>
+    body {
+        background-image: url('../Image/Kavi 2.jpg');
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+</style>
